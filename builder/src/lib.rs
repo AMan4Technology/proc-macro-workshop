@@ -24,10 +24,10 @@ pub fn derive(input: TokenStream) -> TokenStream {
             let tys: Vec<&Type> = fields.iter().map(|f| f.1).collect();
 
             quote! {
-                pub fn build(self) -> Result<Command, Box<dyn Error>> {
+                pub fn build(&mut self) -> Result<Command, Box<dyn Error>> {
                     Ok(#name{
                         #(
-                            #names: self.#names.unwrap(),
+                            #names: self.#names.to_owned().unwrap(),
                         )*
                     })
                 }
